@@ -1,0 +1,42 @@
+[
+  {
+    "id": "A01",
+    "context": "New conversation. No files, project or previous requirements are available.",
+    "request": "make me an app"
+  },
+  {
+    "id": "A02",
+    "context": "New conversation.",
+    "request": "What is the capital of France?"
+  },
+  {
+    "id": "A03",
+    "context": "The user previously supplied a JavaScript function and asked why it crashes. The assistant identified that user.name is accessed when user is null and showed the affected line. The user now authorises the fix.",
+    "request": "fix it"
+  },
+  {
+    "id": "A04",
+    "context": "Codex has the repository. The task and location are known.",
+    "request": "Fix the spelling of 'Setings' to 'Settings' in the existing navigation. Preserve layout and do not add tests."
+  },
+  {
+    "id": "A05",
+    "context": "No prior requirements or inputs.",
+    "request": "research the thing and make it better"
+  },
+  {
+    "id": "A06",
+    "context": "A prompt request is explicit.",
+    "request": "Write a ChatGPT prompt to compare two attached supplier proposals against a £5,000 budget."
+  },
+  {
+    "id": "A07",
+    "context": "New conversation. No files are needed.",
+    "request": "trasnlate bonjour to english"
+  },
+  {
+    "id": "A08",
+    "context": "The user directly declines prompt rewriting.",
+    "request": "Don't rewrite my request into a prompt. Inspect this repository and find why the tests fail, then fix the root cause."
+  }
+]

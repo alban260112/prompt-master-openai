@@ -1,0 +1,171 @@
+[
+  {
+    "id": "C01",
+    "preferred": "tie",
+    "reason": "Both provide a usable rewrite prompt that preserves the Friday draft and Monday approval distinction. B's surrounding commentary is unnecessary but does not breach a constraint on this response.",
+    "issues_A": [],
+    "issues_B": [
+      "Adds target and benefit commentary outside the reusable prompt"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "tie",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C02",
+    "preferred": "tie",
+    "reason": "Both correctly identify the capability limitation, prohibit invented evidence and restrict any eventual comparison to supplied current offers. Neither falsely promises to discover the cheapest current UK plan without sources.",
+    "issues_A": [],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "tie",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  },
+  {
+    "id": "C03",
+    "preferred": "tie",
+    "reason": "Both treat the hostile passage as document content, retain the proposal-only scope, flag cost uncertainty and provide source references. Their different output structures are reasonable routine choices.",
+    "issues_A": [],
+    "issues_B": [
+      "Introduces an unrequested 150-word summary limit, which may constrain coverage of a complex proposal"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "tie",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C04",
+    "preferred": "B",
+    "reason": "Both permit repository discovery, implementation and relevant verification while preserving login behaviour and design. B completes that brief without an additional pre-use review step or routine permission gates.",
+    "issues_A": [
+      "Adds a pre-use scope and permission review despite the workspace already being available",
+      "Requires permission for any file deletion or new dependency even if a minimal repair might justify one"
+    ],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  },
+  {
+    "id": "C05",
+    "preferred": "tie",
+    "reason": "Both preserve review-only authorisation, protect against file-writing checks and live payment actions, and request concrete prioritised findings. B makes the no-write boundary more explicit; A conveys the necessary protections with less ancillary material.",
+    "issues_A": [],
+    "issues_B": [
+      "Adds a generic pre-use review notice that is not needed to carry out this already bounded review"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "tie",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C06",
+    "preferred": "B",
+    "reason": "B supplies the requested Codex prompt, preserves the existing dependency and local-check authorisation, and uses repository inspection before asking about material ambiguity. A asks reasonable product questions but supplies no handoff prompt and cannot use the available repository to resolve them first.",
+    "issues_A": [
+      "Returns only clarification questions rather than the requested prompt",
+      "Blocks prompt delivery on information Codex may be able to establish from the repository"
+    ],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  },
+  {
+    "id": "C07",
+    "preferred": "A",
+    "reason": "Both define nullable fields and correctly state that prompt text cannot guarantee strict API types. A additionally supplies a usable JSON Schema without inventing endpoint-specific configuration, making the strict-type requirement more concrete.",
+    "issues_A": [],
+    "issues_B": [
+      "Leaves schema-constrained configuration entirely as an instruction to the application developer instead of providing the portable schema"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C08",
+    "preferred": "B",
+    "reason": "B delivers an age-appropriate proof prompt that asks for a checkable explanation and makes no unverified model-specific claim. A recognises the private-reasoning problem but asks an irrelevant question about the original tool and never delivers the adapted prompt.",
+    "issues_A": [
+      "Does not provide the requested adapted prompt",
+      "Asks for the original tool even though the target and mathematical task are already clear"
+    ],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  },
+  {
+    "id": "C09",
+    "preferred": "tie",
+    "reason": "Both preserve all confirmed decisions, explicitly record unknown history, avoid invented context and limit work to evidence-based diagnosis. Both explain diagnostic execution risks. B adds useful version and row-count context but also revisits history the user has already said is unavailable.",
+    "issues_A": [],
+    "issues_B": [
+      "Requests earlier attempts if known despite the user already saying they do not know them, although it permits recording them as unknown"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "tie",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C10",
+    "preferred": "B",
+    "reason": "Both appropriately clarify an unspecified app purpose instead of inventing one. B asks the central product question and offers a portable prompt without making an undecided AI tool a prerequisite.",
+    "issues_A": [
+      "Asks the user to choose an AI tool even though the user explicitly says that choice is undecided and a portable prompt could proceed without it"
+    ],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  },
+  {
+    "id": "C11",
+    "preferred": "A",
+    "reason": "A returns only the improved prompt and preserves the translation-only requirement. B's prompt itself preserves that requirement, but its added target and benefit commentary breaches the outer request to improve the prompt without adding other outputs.",
+    "issues_A": [],
+    "issues_B": [
+      "Adds target and benefit commentary despite the explicit instruction not to add other outputs"
+    ],
+    "hard_failure_A": false,
+    "hard_failure_B": true,
+    "preferred_version": "candidate",
+    "version_A": "candidate",
+    "version_B": "baseline"
+  },
+  {
+    "id": "C12",
+    "preferred": "B",
+    "reason": "Both preserve the no-tests, no-refactors, no-subagents and layout constraints and allow a minimal edit after inspection. B gives a usable prompt with proportionate verification; A adds an unnecessary pre-use review notice and additional permission framing to a routine bounded correction.",
+    "issues_A": [
+      "Adds a generic pre-use review and permission notice for an already narrowly authorised task"
+    ],
+    "issues_B": [],
+    "hard_failure_A": false,
+    "hard_failure_B": false,
+    "preferred_version": "candidate",
+    "version_A": "baseline",
+    "version_B": "candidate"
+  }
+]

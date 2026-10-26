@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt Master: OpenAI research and adaptation</title>
+<style>
+:root{color-scheme:light;--ink:#182d3d;--muted:#536574;--line:#d6dfe5;--accent:#075d65;--paper:#fff;--wash:#f2f6f7}*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink);font:17px/1.65 Georgia,serif}main{max-width:1080px;margin:32px auto;background:var(--paper);padding:48px 64px 72px;border:1px solid var(--line);border-radius:10px}header{border-bottom:3px solid var(--accent);padding-bottom:22px;margin-bottom:28px}.eyebrow{font:600 13px/1.5 system-ui,sans-serif;letter-spacing:.08em;color:var(--accent)}h1{font:700 38px/1.15 system-ui,sans-serif;max-width:850px;margin:14px 0}h2{font:650 25px/1.3 system-ui,sans-serif;margin:42px 0 15px}h3{font:650 19px/1.4 system-ui,sans-serif;margin:25px 0 10px}p{margin:0 0 15px}a{color:#075b87;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:8px 20px;font:14px/1.6 system-ui,sans-serif;margin-bottom:28px}.note{padding:18px 22px;background:#edf5f4;border-left:4px solid var(--accent);margin:22px 0}.muted{color:var(--muted)}table{width:100%;border-collapse:collapse;font:14px/1.5 system-ui,sans-serif;margin:18px 0 26px}th,td{border:1px solid var(--line);text-align:left;vertical-align:top;padding:12px}th{background:#edf2f5}tr:nth-child(even) td{background:#fafcfd}code,pre{font:13px/1.6 Consolas,monospace}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;background:#152f3c;color:#f5f8fa;padding:20px;border-radius:6px}li{margin:7px 0}.table-wrap{overflow:auto}.source-list{font:15px/1.6 system-ui,sans-serif}.source-list li{margin-bottom:14px}.tag{font:600 12px/1.4 system-ui,sans-serif;color:var(--accent)}footer{border-top:1px solid var(--line);margin-top:40px;padding-top:20px;font:14px/1.6 system-ui,sans-serif}details{border:1px solid var(--line);padding:15px 18px;margin:15px 0}summary{font:600 16px/1.6 system-ui,sans-serif;cursor:pointer}@media(max-width:760px){main{margin:0;padding:28px 20px;border:0;border-radius:0}h1{font-size:30px}table{min-width:650px}}@media print{body{background:#fff;font-size:11pt}main{margin:0;border:0;padding:0;max-width:none}nav{display:none}h2,h3{break-after:avoid}tr,pre,.note{break-inside:avoid}a{color:inherit}.table-wrap{overflow:visible}table{min-width:0;font-size:9pt}}
+</style>
+</head>
+<body><main>
+<header><div class="eyebrow">RESEARCH AND LOCAL SKILL ADAPTATION</div><h1>PROMPT MASTER FOR CHATGPT AND CODEX</h1><p class="muted">26 October 2026 | Based on nidhinjs/prompt-master 1.8.2 | Local edition 1.8.2-openai.1</p></header>
+<nav aria-label="Contents"><a href="#findings">Findings</a><a href="#surfaces">ChatGPT and Codex</a><a href="#research">Research</a><a href="#audit">Original audit</a><a href="#changes">Changes</a><a href="#validation">Validation</a><a href="#use">Use the edition</a><a href="#sources">Sources</a></nav>
+
+<section id="findings"><h2>What the research supports</h2>
+<p>Prompt Master has a useful foundation: identify the task, extract relevant intent, choose the target tool, diagnose weaknesses and return a usable prompt. The OpenAI adaptation keeps that foundation and the original template library. Most changes concern rules that can make a capable assistant unnecessarily rigid, overconfident or hesitant.</p>
+<p>The strongest practical recommendations are to specify the intended result, provide the information that can change it, preserve real constraints and define useful completion checks. A complicated prompt is justified when the task needs it. A short rewrite rarely needs a persona, a success checklist, a memory block or several mandatory headings. <a href="#O1">[O1]</a> <a href="#O2">[O2]</a></p>
+<p>Current reasoning guidance supports direct instructions and selective examples. It does not establish a universal maximum prompt length, a single best delimiter or a fixed number of demonstrations. Asking for a clear explanation, proof or calculation remains appropriate when that is the deliverable; requesting the model's private internal reasoning is a different matter. <a href="#O4">[O4]</a></p>
+<div class="note"><p><strong>What “better” means here:</strong> the revision removes identifiable weaknesses and follows the researched guidance more closely. That is a design improvement. A claim that it produces more correct ChatGPT answers, saves a percentage of tokens or reduces cost would require downstream testing on representative work. This report does not make those claims.</p></div>
+</section>
+
+<section id="surfaces"><h2>What each surface needs from a prompt</h2>
+<div class="table-wrap"><table><thead><tr><th>Surface</th><th>Useful information</th><th>Common mistake</th></tr></thead><tbody>
+<tr><td>Ordinary ChatGPT conversation</td><td>The desired answer or artifact, supplied input, relevant audience and important constraints</td><td>Adding API controls, invented tool access or a formal template to every simple request</td></tr>
+<tr><td>ChatGPT Work or a conversation using tools</td><td>The finished artifact, relevant sources, authorised actions, actual limits and review criteria</td><td>Confusing permission to prepare a draft with permission to send it, or assuming unavailable connections</td></tr>
+<tr><td>Codex</td><td>The behaviour to inspect or change, symptoms, project context, protected behaviour and completion checks</td><td>Guessing file paths, prescribing every command, or turning a review into an implementation task</td></tr>
+<tr><td>OpenAI API application</td><td>Instruction roles, variable inputs, defined tools, output schema, failure handling and an evaluation set</td><td>Treating prose instructions as enforcement of types, permissions or runtime settings</td></tr>
+</tbody></table></div>
+<h3>ChatGPT</h3>
+<p>For a conversational task, the prompt should describe the answer the user can use. “Explain this for a new manager” changes the required background and examples. “Return a three-column comparison” changes the output. “Be an expert” often adds little unless the perspective affects what is assessed. The adaptation makes roles optional and preserves the user's chosen form instead of manufacturing one.</p>
+<p>Research prompts need an evidence contract. Naming the question, period and applicable location can prevent an irrelevant comparison. Requesting links is useful only when the target can retrieve or access the sources. If a user requests current prices in a chat without browsing or supplied data, the prompt should expose that missing input rather than manufacture a “current” answer. Source-only tasks need a clear boundary around the supplied evidence.</p>
+<h3>Codex</h3>
+<p>A coding agent can obtain much of its context from a workspace. A useful request gives it the observed problem and expected behaviour, then allows it to find the implementation and relevant callers. Exact paths help when known. An invented path is worse than a request to locate the responsible code.</p>
+<p>Codex also needs a clear distinction between explanation, planning, review and implementation. The adaptation preserves that mode and the user's existing authorisation. It ties completion to appropriate project checks and requires a truthful report of what was checked. It does not assume that every small edit needs a new test or that a broad objective authorises unrelated changes. <a href="#O3">[O3]</a> <a href="#O5">[O5]</a></p>
+<h3>API applications</h3>
+<p>Some reliability problems belong in the application. Supported structured outputs can constrain the shape of a response, but values can still be wrong. Applications must handle incomplete responses, refusals and invalid or missing inputs. Prompt text cannot supply those mechanisms. The API profile therefore separates instructions, data, tool definitions and configuration. <a href="#O7">[O7]</a></p>
+<p>The same distinction applies to efficiency. Reusing a stable prefix can reduce repeated input computation where caching applies. It does not create persistent memory or establish that the prompt is accurate. The adaptation recommends measuring actual usage rather than equating shorter text with lower total cost. <a href="#O8">[O8]</a></p>
+</section>
+
+<section id="research"><h2>What the research does and does not establish</h2>
+<h3>Clarity and examples</h3>
+<p>The Prompt Report describes a broad range of techniques and design choices. Its treatment of demonstrations includes selection, ordering, label distribution and quantity. That breadth is incompatible with Prompt Master's assertion that two to five examples are always the preferred range. The revised rule is to include examples when they resolve a real ambiguity and test their value. <a href="#P1">[P1]</a></p>
+<p>Examples are particularly useful when labels, edge cases or a writing pattern are easier to demonstrate than describe. They can also quietly contradict instructions. A classifier that says “unknown is allowed” but shows only confident labels may teach the wrong behaviour. The adaptation checks consistency and includes missing-value behaviour where the task needs it.</p>
+<h3>Formatting and position</h3>
+<p>Sclar and colleagues found substantial sensitivity to apparently superficial formatting in the older open models they tested. He and colleagues also found that GPT models could react differently to plain text, Markdown, JSON and YAML, with no universal winner. These results support evaluating format choices; they do not establish XML, headings or capitalisation as universally superior. <a href="#P8">[P8]</a> <a href="#P9">[P9]</a></p>
+<p>Lost in the Middle found position effects on retrieval and multi-document question answering in historical models. Its model set included GPT-3.5, Claude 1.3 and older open models, with limited GPT-4 analysis. That is a reason to make relevant information easy to find. It does not validate a rule that every constraint or memory block must appear in the first 30% of every current prompt. <a href="#P2">[P2]</a></p>
+<p>The adaptation retains clear organisation and source labels, but drops the percentage rule. It also avoids arbitrarily narrowing context to one function when the relevant behaviour spans several files.</p>
+<h3>Reasoning and self-correction</h3>
+<p>The original chain-of-thought study established gains from intermediate-step demonstrations on the earlier models and tasks it tested. Current OpenAI reasoning guidance concerns a different generation of models that already perform internal reasoning. Both can be true. A historical result should not become a requirement to expose internal reasoning in a modern ChatGPT prompt. <a href="#P6">[P6]</a> <a href="#O4">[O4]</a></p>
+<p>Huang and colleagues distinguish intrinsic self-correction from feedback provided by an external source, tool or person. Their experiments showed that asking a model to reconsider without useful feedback could fail or reduce reasoning performance. The paper also notes that other tasks, including style adjustment, can behave differently. The revision requests concrete checks where available and avoids claiming that “verify yourself” establishes truth. <a href="#P3">[P3]</a></p>
+<p>A useful verification request is specific to the artifact: recalculate a total, reproduce a reported bug, compare a claim with its source, validate an output schema or inspect a visual result. Repeating an assurance that the answer is correct does not supply that evidence.</p>
+<h3>Tools, sampling and multiple agents</h3>
+<p>ReAct combines model decisions with observations from an external environment. Its relevant lesson here is that a tool observation can add information the prompt alone lacks. Its historical visible reasoning format is not imported into this edition. The tool route instead states the result to obtain and the evidence that can establish it. <a href="#P5">[P5]</a></p>
+<p>Self-consistency evaluates several sampled solution paths and combines their answers. Multiagent debate uses several model instances that exchange responses. These are actual execution procedures. A single response pretending to contain several independent experts does not reproduce them. Their additional calls and cost must also be considered. The skill retains this distinction without claiming that all decomposition or chaining is inherently fabricated. <a href="#P7">[P7]</a> <a href="#P12">[P12]</a></p>
+<h3>Conversation, handovers and repetition</h3>
+<p>The multi-turn study by Laban and colleagues found reliability problems when instructions were gradually revealed in simulated analytical conversations. Their limitations section is explicit that the simulation does not represent the full range of natural human conversation. It supports consolidating corrected requirements when a conversation drifts, not restarting every chat or denying the value of follow-up refinement. <a href="#P10">[P10]</a></p>
+<p>The repetition study provides a useful counterexample to an absolute “every repetition wastes tokens” rule. It reports gains mainly in tested non-reasoning configurations, with less decisive results when reasoning was enabled. Repeating the entire prompt is therefore an option to test under those conditions, not a default prescription for current ChatGPT or Codex. <a href="#P11">[P11]</a></p>
+<p>The adaptation uses short handovers when transferring work, preserves later corrections and avoids repeatedly copying the whole history. It does not promise that a memory block will be retained indefinitely.</p>
+<h3>Why prompting tricks need local testing</h3>
+<p>Battle and Gollapudi found that prompt effects did not generalise uniformly across their tested models. That reinforces the need to test a technique on the actual workload before treating it as a rule. Their mathematics experiments on small open models do not establish an advantage from motivational language in a current ChatGPT workflow. <a href="#P4">[P4]</a></p>
+<p>There is no evidence in the reviewed material that this particular Prompt Master derivative improves all tasks. The practical goal is a defensible starting point that can be revised when a real failure is observed.</p>
+</section>
+
+<section id="audit"><h2>Audit of the original Prompt Master</h2>
+<p>The base is the actual repository at commit <code>49b3a72469b1e7287d66387004ccfcca90e5968a</code>, dated 22 October 2026. The local snapshot includes SKILL.md, both original references, README.md and the MIT licence. It already includes ChatGPT, Codex and OpenAI Template N. The work therefore adapts existing support rather than adding it for the first time. <a href="#U1">[U1]</a></p>
+<div class="table-wrap"><table><thead><tr><th>Original component</th><th>Assessment</th><th>Change</th></tr></thead><tbody>
+<tr><td>Nine dimensions of intent</td><td>Useful diagnostic; too easy to interpret as a form</td><td>Retained all nine; include only information that affects the task</td></tr>
+<tr><td>Target tool confirmation</td><td>Can create unnecessary questions when the target is established</td><td>Infer from context; ask when the distinction matters</td></tr>
+<tr><td>Single prompt plus a target badge</td><td>Good default prompt delivery, but too rigid for analysis or requested variants</td><td>Keep a copyable prompt; follow the requested output mode</td></tr>
+<tr><td>Missing format creates a format lock</td><td>Can invent requirements and constrain an otherwise clear task</td><td>Choose a useful form without manufacturing a numerical limit</td></tr>
+<tr><td>Exact file boundaries</td><td>Helpful when correct, harmful if guessed or narrower than the fix</td><td>Use known paths; otherwise let the target discover relevant files</td></tr>
+<tr><td>Confidence-based grounding</td><td>Confidence is not evidence that a claim or citation is correct</td><td>Name the evidence base and require supporting source locations</td></tr>
+<tr><td>Memory block with all decisions</td><td>Can duplicate history, carry superseded choices or invent missing context</td><td>Use a compact handover of relevant confirmed state</td></tr>
+<tr><td>First-30-percent placement</td><td>No universal threshold established by reviewed research</td><td>Remove the percentage requirement</td></tr>
+<tr><td>Fixed example range</td><td>Unsupported as a universal optimum</td><td>Use representative examples when they resolve ambiguity</td></tr>
+<tr><td>Generic agent warning</td><td>Adds noise without identifying a concrete decision</td><td>Keep actual action boundaries and necessary setup notes</td></tr>
+<tr><td>Default approval prompts</td><td>Can conflict with existing authorisation</td><td>Preserve approved actions and ask only about unresolved consequential choices</td></tr>
+<tr><td>Model and API detail inside routing</td><td>Can drift and distract from ordinary prompts</td><td>Move OpenAI guidance into surface references; verify exact controls when needed</td></tr>
+<tr><td>First-attempt success as the only metric</td><td>Excludes useful exploration and does not measure correctness</td><td>Evaluate task success, constraints, evidence, clarification and resource use</td></tr>
+<tr><td>Secret handling and inert pasted prompts</td><td>Useful existing safeguards</td><td>Retained, with source/data boundaries reinforced in the OpenAI profiles</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="changes"><h2>How the original is preserved</h2>
+<p>The edition retains the original workflow order: purpose and output, intent extraction, tool routing, diagnostics, memory handling, prompt decompilation and final checks. It retains the diagnostic categories and templates A to N. Changes to shared rules are recorded in the supplied difference file. Specialised ChatGPT, Codex and API guidance is stored in separate references.</p>
+<p>Other providers' routing profiles remain to preserve the original base. This research does not certify their exact current models, parameters or product behaviour. The edition identifies that limit and tells OpenAI targets to use the OpenAI references. It does not replace the user's selected product, install another client or change their model settings.</p>
+<p>Skill packaging also matters. The required name and description identify when it should be selected; detailed references load when the workflow needs them. The installed edition is named <code>prompt-master-openai</code> so that its provenance and scope are visible. It is intended for prompt writing or diagnosis, not to intercept every ordinary user request. <a href="#O10">[O10]</a> <a href="#O11">[O11]</a></p>
+<p>The standalone ChatGPT text uses the same retained components in a self-contained form. It avoids references to local files a normal ChatGPT conversation cannot read. It can be pasted into a chat and followed by the rough prompt or idea.</p>
+<h3>Examples of the intended behaviour</h3>
+<p>A simple writing request should stay simple:</p>
+<pre>Make this message clearer for the project team. Preserve the dates and commitments: [message]</pre>
+<p>A coding request should describe a real problem and let the workspace supply unknown details:</p>
+<pre>Fix the login form submitting twice. Find the responsible code and reproduce the failure. Preserve the existing design and authentication behaviour, follow the project guidance, and run the relevant checks. Report the cause, changes and any validation gap.</pre>
+<p>A factual comparison should state what counts as evidence:</p>
+<pre>Compare the attached supplier proposals against our requirements and budget. Link material claims to their source sections, distinguish missing information from a weak score, and recommend an option with the decisive trade-off.</pre>
+<p>These examples illustrate the design choices. They are not benchmark results or mandatory formats.</p>
+</section>
+
+<section id="validation"><h2>Validation and limits</h2>
+<p>The comparison uses twelve synthetic scenarios written for this task. Two agents receive the same cases independently, one with the original skill and one with the candidate. They generate the response each scenario should receive; they do not execute the prompts on a live ChatGPT service or alter a real project.</p>
+<p>The cases cover a short rewrite, unavailable browsing, hostile source text, unknown repository paths, review-only work, an already approved dependency, typed API extraction, a teaching proof, a corrected handover, an undefined app, translation-only output and a typo fix with explicit restrictions.</p>
+<div id="validation-results" class="note"><p>The label-blinded reviewer preferred the revised response in seven scenarios, recorded five ties and preferred the original in none. Both generators completed all twelve cases. The original handled several boundary cases well. The clearest differences concerned unnecessary questions, permission friction and an explicit output-only instruction. These are qualitative judgements about generated prompts, not measurements of downstream ChatGPT task success. The full responses and case notes are included in the validation files.</p></div>
+<p>Evaluation guidance recommends representative examples, clear criteria, appropriate baselines and attention to judging bias. The local checks follow those principles at a small scale. The cases are development examples, not an untouched holdout. The judges are models, and the available agent configuration is shared. Counts from this exercise should not be presented as a general accuracy rate. <a href="#O6">[O6]</a></p>
+<p>A stronger future comparison would run both versions' generated prompts against the same downstream model and tools, use tasks from the user's actual work, repeat variable cases and inspect correctness alongside actual latency and usage. It should retain failures as well as successful examples. The included evaluation reference gives that protocol without requiring an external paid service.</p>
+</section>
+
+<section id="use"><h2>Use the edition</h2>
+<ol><li>In this Codex environment, use the installed <code>prompt-master-openai</code> skill for requests such as “Improve this prompt for ChatGPT”. Explicit invocation is <code>$prompt-master-openai</code></li><li>In an ordinary ChatGPT chat, paste <code>Prompt-Master-ChatGPT.txt</code>, then send the prompt or idea to improve</li><li>For another compatible skill host, use the supplied folder or ZIP. The host must support skills and the necessary reference files; a ZIP by itself does not add tool access</li></ol>
+<p>Keep the original snapshot and the recorded difference when assessing future changes. The local derivative is intentionally named separately. The final delivery records the installation and file-integrity checks actually completed.</p>
+</section>
+
+<section id="sources"><h2>Source register and review method</h2>
+<p>The source set contains eleven official OpenAI documents, twelve research papers and the original repository. Search results and third-party summaries helped locate material but are not used as technical evidence. Official guidance was read at relevant sections. Full-text sections were inspected for the survey, long-context study, self-correction study, GPT formatting study, multi-turn study and repetition study. The remaining papers were screened through their abstracts for the narrow findings cited here. This is an extensive applied review, not an exhaustive systematic review.</p>
+<p>When sources differed, the adaptation preferred current guidance for the actual product and model, kept historical findings within their tested scope and labelled implementation choices as recommendations. An older API harness guide, for example, cannot determine how every current desktop host should communicate. No independent study in this set benchmarks this derivative.</p>
+<h3>Official documentation</h3>
+<ol class="source-list">
+<li id="O1"><a href="https://learn.chatgpt.com/docs/prompting">ChatGPT prompting</a>. Practical guidance for ordinary conversations, Work and Codex; supports selective detail and refinement</li>
+<li id="O2"><a href="https://learn.chatgpt.com/guides/best-practices">Codex best practices</a>. Connects clear goals, context, constraints and completion criteria with the project environment</li>
+<li id="O3"><a href="https://developers.openai.com/api/docs/guides/latest-model/gpt-6-astra.md#prompting-best-practices">Current model prompting guidance</a>. Covers autonomy, skill instructions, communication, delegation and proportionate testing; model observations require workload validation</li>
+<li id="O4"><a href="https://developers.openai.com/api/docs/guides/reasoning-best-practices">Reasoning best practices</a>. Supports direct prompts, useful delimiters and selective demonstrations</li>
+<li id="O5"><a href="https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide">Codex prompting guide</a>, February 2026. An API-oriented historical guide; useful for agent workflow, with host-specific limits</li>
+<li id="O6"><a href="https://developers.openai.com/api/docs/guides/evaluation-best-practices">Evaluation best practices</a>. Task-specific tests, baselines, human calibration and model-judging bias</li>
+<li id="O7"><a href="https://developers.openai.com/api/docs/guides/structured-outputs">Structured outputs</a>. Separates schema adherence, refusal handling and factual correctness</li>
+<li id="O8"><a href="https://developers.openai.com/api/docs/guides/prompt-caching">Prompt caching</a>. Explains stable prefixes, relevant settings and actual reuse</li>
+<li id="O9"><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">Prompt engineering</a>. Message authority, formatting, examples, relevant context and versioning</li>
+<li id="O10"><a href="https://learn.chatgpt.com/docs/customization/overview">Codex customisation</a>. Distinguishes project instructions, memories, skills and tool connections</li>
+<li id="O11"><a href="https://learn.chatgpt.com/docs/build-skills">Build skills</a>. Skill manifests, discovery and supporting references</li>
+</ol>
+<h3>Research papers</h3>
+<ol class="source-list">
+<li id="P1"><a href="https://arxiv.org/html/2406.06608v6">Schulhoff et al., The Prompt Report</a>, 2024, revised 2025. Survey used to check broad technique and example-selection claims</li>
+<li id="P2"><a href="https://arxiv.org/html/2307.03172v3">Liu et al., Lost in the Middle</a>, 2023. Retrieval and position effects in historical long-context models</li>
+<li id="P3"><a href="https://arxiv.org/html/2310.01798v2">Huang et al., Large Language Models Cannot Self-Correct Reasoning Yet</a>, 2023, revised 2024. Intrinsic correction versus external feedback; not a universal claim about current models or all editing</li>
+<li id="P4"><a href="https://arxiv.org/abs/2402.10949">Battle and Gollapudi, The Unreasonable Effectiveness of Eccentric Automatic Prompts</a>, 2024. Model-dependent prompt effects on selected mathematics experiments</li>
+<li id="P5"><a href="https://arxiv.org/abs/2210.03629">Yao et al., ReAct</a>, 2022, revised 2023. Model interaction with external observations</li>
+<li id="P6"><a href="https://arxiv.org/abs/2201.11903">Wei et al., Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</a>, 2022, revised 2023. Historical demonstrations on earlier models</li>
+<li id="P7"><a href="https://arxiv.org/abs/2203.11171">Wang et al., Self-Consistency Improves Chain of Thought Reasoning in Language Models</a>, 2022, revised 2023. Actual multi-sample decoding and aggregation</li>
+<li id="P8"><a href="https://arxiv.org/abs/2310.11324">Sclar et al., Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design</a>, 2023, revised 2024. Few-shot formatting sensitivity in tested open models</li>
+<li id="P9"><a href="https://arxiv.org/html/2411.10541v1">He et al., Does Prompt Formatting Have Any Impact on LLM Performance?</a>, 2024. Format comparisons across older GPT versions; excludes XML and present models</li>
+<li id="P10"><a href="https://arxiv.org/html/2505.06120v1">Laban et al., LLMs Get Lost In Multi-Turn Conversation</a>, 2025. Simulated underspecification and conversational reliability</li>
+<li id="P11"><a href="https://arxiv.org/html/2512.14982v1">Leviathan et al., Prompt Repetition Improves Non-Reasoning LLMs</a>, 2025. A boundary condition for anti-repetition advice</li>
+<li id="P12"><a href="https://arxiv.org/abs/2305.14325">Du et al., Improving Factuality and Reasoning in Language Models through Multiagent Debate</a>, 2023. Separate model instances and extra inference, not simulated personas</li>
+</ol>
+<h3>Original source</h3>
+<p id="U1" class="source-list"><a href="https://github.com/nidhinjs/prompt-master/tree/49b3a72469b1e7287d66387004ccfcca90e5968a">nidhinjs/prompt-master, pinned source snapshot</a>. Original skill, templates, diagnostic patterns, documentation and MIT licence</p>
+</section>
+<footer>Local derivative prepared for the user's requested adaptation. The original MIT licence is retained in the skill package. OpenAI and the upstream author have not endorsed this edition. Product guidance is time-sensitive; the source review date is 26 October 2026.</footer>
+</main></body></html>

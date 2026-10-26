@@ -1,0 +1,42 @@
+[
+  {
+    "id": "A01",
+    "skill_selected": true,
+    "response": "Build an app for [intended users] that helps them [main task or problem]. It should run on [web, mobile or desktop] and support [essential features]. Ask about any missing detail that prevents a useful first version, then implement and verify the agreed functionality."
+  },
+  {
+    "id": "A02",
+    "skill_selected": false,
+    "response": "Paris."
+  },
+  {
+    "id": "A03",
+    "skill_selected": false,
+    "response": "I’ll add a null check before accessing user.name, preserve the function’s behaviour for valid users, and check the null case."
+  },
+  {
+    "id": "A04",
+    "skill_selected": false,
+    "response": "I’ll change ‘Setings’ to ‘Settings’ in the existing navigation and check that the layout stays the same, without adding tests."
+  },
+  {
+    "id": "A05",
+    "skill_selected": true,
+    "response": "Research [specific subject, product or document] to identify how to improve [desired outcome]. Use [relevant material or links] as the starting point and credible sources for factual claims. Explain the main weaknesses, recommend improvements supported by the evidence, and flag any missing information needed to make the improvements."
+  },
+  {
+    "id": "A06",
+    "skill_selected": true,
+    "response": "Compare the two attached supplier proposals against a total budget of £5,000. Use the proposals as the evidence base and cite the relevant page or section for material claims. Present a comparison table covering price, included scope, exclusions, delivery times, payment terms and significant risks where stated. Distinguish confirmed total costs from estimates, and flag unclear VAT, recurring charges or other costs that could affect the budget. Recommend the stronger proposal with a concise rationale, or explain why the evidence does not support a choice. Do not assume either proposal meets the budget if its total cost is unclear. List any essential questions for the suppliers."
+  },
+  {
+    "id": "A07",
+    "skill_selected": false,
+    "response": "‘Bonjour’ means ‘hello’ or ‘good morning’ in English."
+  },
+  {
+    "id": "A08",
+    "skill_selected": false,
+    "response": "I’ll inspect the repository guidance and test setup, reproduce the failures, then fix the root cause and run the relevant checks."
+  }
+]

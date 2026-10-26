@@ -1,0 +1,6 @@
+interface:
+  display_name: "Prompt Master: OpenAI edition"
+  short_description: "Improve prompts and clarify vague action requests"
+  default_prompt: "Use $prompt-master-openai to improve this prompt for ChatGPT or Codex while preserving my intent and constraints."
+policy:
+  allow_implicit_invocation: true

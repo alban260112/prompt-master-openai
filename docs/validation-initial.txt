@@ -1,0 +1,67 @@
+PROMPT MASTER: VALIDATION RECORD
+
+Date: 26 October 2026
+Baseline: nidhinjs/prompt-master 1.8.2 at 49b3a72469b1e7287d66387004ccfcca90e5968a
+Candidate: prompt-master-openai 1.8.2-openai.1
+
+Method
+
+Two separate agents generated responses to the same twelve synthetic prompt-writing requests. Each read its assigned skill and relevant references. Neither executed the generated prompts. A third agent compared the paired responses without source-version labels. A/B order was balanced across cases. Distinctive formatting could still reveal the source style. The available parent model configuration was inherited; an exact service snapshot and runtime settings were not independently recorded.
+
+The review criteria were preserved intent and facts, realistic capabilities, authorisation, usable output, clarification and avoidable friction. The cases were written during development and were not an untouched holdout. This is a single qualitative model review, not a statistical result or independent human evaluation.
+
+Observed result
+
+The judge preferred the candidate in 7 cases, preferred the original in 0 cases, and recorded 5 ties.
+
+The original handled several important cases well, including unavailable browsing, hostile document content, review-only boundaries and corrected handovers. The clearest candidate advantages were delivering an adapted proof prompt without an irrelevant question, preserving existing authorisation while allowing workspace discovery, and supplying a portable extraction schema. One original response was flagged for adding commentary despite an explicit request for no other outputs. These are observations about the generated prompts only.
+
+Case review
+
+C01: tie. Both provide a usable rewrite prompt that preserves the Friday draft and Monday approval distinction. B's surrounding commentary is unnecessary but does not breach a constraint on this response.
+  baseline: Adds target and benefit commentary outside the reusable prompt
+
+C02: tie. Both correctly identify the capability limitation, prohibit invented evidence and restrict any eventual comparison to supplied current offers. Neither falsely promises to discover the cheapest current UK plan without sources.
+
+C03: tie. Both treat the hostile passage as document content, retain the proposal-only scope, flag cost uncertainty and provide source references. Their different output structures are reasonable routine choices.
+  baseline: Introduces an unrequested 150-word summary limit, which may constrain coverage of a complex proposal
+
+C04: candidate. Both permit repository discovery, implementation and relevant verification while preserving login behaviour and design. B completes that brief without an additional pre-use review step or routine permission gates.
+  baseline: Adds a pre-use scope and permission review despite the workspace already being available
+  baseline: Requires permission for any file deletion or new dependency even if a minimal repair might justify one
+
+C05: tie. Both preserve review-only authorisation, protect against file-writing checks and live payment actions, and request concrete prioritised findings. B makes the no-write boundary more explicit; A conveys the necessary protections with less ancillary material.
+  baseline: Adds a generic pre-use review notice that is not needed to carry out this already bounded review
+
+C06: candidate. B supplies the requested Codex prompt, preserves the existing dependency and local-check authorisation, and uses repository inspection before asking about material ambiguity. A asks reasonable product questions but supplies no handoff prompt and cannot use the available repository to resolve them first.
+  baseline: Returns only clarification questions rather than the requested prompt
+  baseline: Blocks prompt delivery on information Codex may be able to establish from the repository
+
+C07: candidate. Both define nullable fields and correctly state that prompt text cannot guarantee strict API types. A additionally supplies a usable JSON Schema without inventing endpoint-specific configuration, making the strict-type requirement more concrete.
+  baseline: Leaves schema-constrained configuration entirely as an instruction to the application developer instead of providing the portable schema
+
+C08: candidate. B delivers an age-appropriate proof prompt that asks for a checkable explanation and makes no unverified model-specific claim. A recognises the private-reasoning problem but asks an irrelevant question about the original tool and never delivers the adapted prompt.
+  baseline: Does not provide the requested adapted prompt
+  baseline: Asks for the original tool even though the target and mathematical task are already clear
+
+C09: tie. Both preserve all confirmed decisions, explicitly record unknown history, avoid invented context and limit work to evidence-based diagnosis. Both explain diagnostic execution risks. B adds useful version and row-count context but also revisits history the user has already said is unavailable.
+  baseline: Requests earlier attempts if known despite the user already saying they do not know them, although it permits recording them as unknown
+
+C10: candidate. Both appropriately clarify an unspecified app purpose instead of inventing one. B asks the central product question and offers a portable prompt without making an undecided AI tool a prerequisite.
+  baseline: Asks the user to choose an AI tool even though the user explicitly says that choice is undecided and a portable prompt could proceed without it
+
+C11: candidate. A returns only the improved prompt and preserves the translation-only requirement. B's prompt itself preserves that requirement, but its added target and benefit commentary breaches the outer request to improve the prompt without adding other outputs.
+  baseline: Adds target and benefit commentary despite the explicit instruction not to add other outputs
+
+C12: candidate. Both preserve the no-tests, no-refactors, no-subagents and layout constraints and allow a minimal edit after inspection. B gives a usable prompt with proportionate verification; A adds an unnecessary pre-use review notice and additional permission framing to a routine bounded correction.
+  baseline: Adds a generic pre-use review and permission notice for an already narrowly authorised task
+
+Packaging checks
+
+The bundled Skill Creator validator passed. Additional checks confirmed local references and anchors, the original nine intent dimensions, templates A to N, diagnostic identifiers 1 to 37, UI metadata, and the unchanged original MIT licence. The research report rendered in a local headless browser at desktop and mobile widths without document overflow; both layouts were inspected. Final archives and the installed copy are checked against source-file hashes.
+
+Limits
+
+No downstream ChatGPT or Codex task-success benchmark was run. No token or monetary savings were measured. The standalone ChatGPT text was inspected for self-containment but did not receive a separate behavioural run. The full skill was tested through its file-based references. Packaging checks do not prove that the active chat has reloaded its skill registry. Existing non-OpenAI profiles are retained as legacy material and have not been independently validated.
+
+Post-comparison changes were limited to template contents links, typography, attribution and packaging. The tested prompt-writing rules were not revised after the comparison.

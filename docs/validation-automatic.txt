@@ -1,0 +1,21 @@
+AUTOMATIC SELECTION CHECK
+
+Edition: 1.8.2-openai.2
+Date: 26 October 2026
+
+An independent agent read the installed skill and handled eight separate synthetic scenarios, using only each scenario's stated context. It did not execute underlying action requests or access a project.
+
+Observed selection:
+
+A01: Selected for an app request with no purpose or requirements. Returned an improved prompt with placeholders
+A02: Not selected for a factual capital-city question. Answered directly
+A03: Not selected for 'fix it' when the preceding conversation established the fault. Continued the known task
+A04: Not selected for a precise typo correction with layout and testing constraints
+A05: Selected for a research request with no identifiable subject or intended improvement
+A06: Selected for an explicit supplier-comparison prompt request
+A07: Not selected for a misspelt but clear translation request
+A08: Not selected when the user explicitly asked to skip prompt rewriting and inspect failing tests
+
+The primary agent inspected all eight outputs. The selected scenarios produced usable prompt text without pretending to execute the task. The other scenarios retained normal task handling or direct answers. This is a small model-based boundary check, not a measured reliability rate, human evaluation or live ChatGPT benchmark.
+
+Raw requests and responses are retained in docs/validation/automatic-cases.json and automatic-responses.json. The original twelve-case comparison is separate and concerns the previous edition.
